@@ -1,0 +1,13 @@
+<h1>Assets</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+  </tr>
+
+<% @assets.each do |asset| %>
+  <tr>
+    <td><%= link_to asset.name, asset %></td>
+  </tr>
+<% end %>
+</table>

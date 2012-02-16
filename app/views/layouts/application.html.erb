@@ -38,6 +38,7 @@
           <div class="container nav-collapse">
             <ul class="nav">
                 <% if current_person %>
+                  <li><%= link_to "New Asset", new_asset_path %></li>
                   <li><%= link_to "Edit Profile", edit_person_path(:current) %></li>
                   <li><%= link_to "Logout", logout_path %></li>
                 <% else %>

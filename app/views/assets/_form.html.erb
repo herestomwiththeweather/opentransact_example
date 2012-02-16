@@ -1,0 +1,12 @@
+<%= bootstrap_form_for(@asset) do |f| %>
+
+  <div class="field">
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.text_area :description %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

@@ -1,4 +1,6 @@
 OpentransactExample::Application.routes.draw do
+  resources :assets
+
   resources :person_sessions
   resources :people
 
@@ -6,7 +8,7 @@ OpentransactExample::Application.routes.draw do
   match 'login' => 'person_sessions#new', :as => :login
   match 'logout' => 'person_sessions#destroy', :as => :logout
 
-  root :to => "people#index"
+  root :to => "assets#index"
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
