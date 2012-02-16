@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>OpentransactExample</title>
+    <title>OpenTransact Example</title>
     <%= csrf_meta_tags %>
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
@@ -34,12 +34,16 @@
             <span class="i-bar"></span>
             <span class="i-bar"></span>
           </a>
-          <a class="brand" href="#">OpentransactExample</a>
+          <a class="brand" href="#">OpenTransact Example</a>
           <div class="container nav-collapse">
             <ul class="nav">
-                <li><%= link_to "Link1", "/path1"  %></li>
-                <li><%= link_to "Link2", "/path2"  %></li>
-                <li><%= link_to "Link3", "/path3"  %></li>
+                <% if current_person %>
+                  <li><%= link_to "Edit Profile", edit_person_path(:current) %></li>
+                  <li><%= link_to "Logout", logout_path %></li>
+                <% else %>
+                  <li><%= link_to "Register", signup_path %></li>
+                  <li><%= link_to "Login", login_path %></li>
+                <% end %>
             </ul>
           </div><!--/.nav-collapse -->
         </div>
@@ -55,20 +59,23 @@
             <div class="span1">&nbsp;</div>
             <div class="span3">
               <div class="well sidebar-nav">
-                <h3>Sidebar</h3>
+              <% if current_person %>
+                <h3>Session</h3>
                  <ul class="nav nav-list">
-                    <li class="nav-header">Sidebar</li>
-                    <li><%= link_to "Link1", "/path1"  %></li>
-                    <li><%= link_to "Link2", "/path2"  %></li>
-                    <li><%= link_to "Link3", "/path3"  %></li>
+                     <li class="nav-header"><%= current_person.username %></li>
+                     <li>Your ip addr: <%= current_person.current_login_ip  %></li>
+                     <li>Login at: <%= current_person.current_login_at.strftime("%I:%M %p") %></li>
+                     <li>Your last ip addr: <%= current_person.last_login_ip  %></li>
+                     <li>Last Login at: <%= current_person.last_login_at.strftime("%I:%M %p") %></li>
                 </ul>
+              <% end %>
             </div>
            </div>
           </div>
         </div>
 
       <footer>
-        <p>&copy; Company 2012</p>
+        <p>&copy; <%= link_to "Tom Brown", "https://github.com/herestomwiththeweather" %> 2012. Released under MIT license</p>
       </footer>
 
     </div> <!-- /container -->

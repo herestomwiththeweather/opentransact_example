@@ -1,0 +1,14 @@
+<table class="table-bordered table-striped">
+  <tr>
+    <th>Username</th>
+    <th>Email</th>
+  </tr>
+
+<% @people.each do |person| %>
+  <tr>
+    <td><%= link_to person.username, person %></td>
+    <td><%= person.email %></td>
+  </tr>
+<% end %>
+</table>
+

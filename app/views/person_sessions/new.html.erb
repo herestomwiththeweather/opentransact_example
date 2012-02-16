@@ -1,0 +1,18 @@
+<h1>Login</h1>
+<%= form_for @person_session do |f| %>
+  <div class="field">
+    <%= f.label :username %>
+    <%= f.text_field :username %>
+  </div>
+  <div class="field">
+    <%= f.label :password %>
+    <%= f.password_field :password %>
+  </div>
+  <div class="actions">
+    <div class="form-actions">
+      <%= f.submit "Sign In", :class => "btn btn-primary" %>
+    </div>
+  </div>
+<% end %>
+
+
