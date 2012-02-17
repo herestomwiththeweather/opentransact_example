@@ -1,5 +1,6 @@
 <h1>Login</h1>
 <%= form_for @person_session do |f| %>
+  <%= render "shared/error_messages", target: @person_session %>
   <div class="field">
     <%= f.label :username %>
     <%= f.text_field :username %>

@@ -23,12 +23,14 @@ end
 group :development, :test do
   gem 'rspec-rails'
   gem 'cucumber-rails'
+  gem 'awesome_print'
 end
 
 gem 'jquery-rails'
 gem 'twitter-bootstrap-rails', :git => 'http://github.com/seyhunak/twitter-bootstrap-rails.git'
 gem 'bootstrap_forms'
 gem 'authlogic'
+gem 'cancan'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

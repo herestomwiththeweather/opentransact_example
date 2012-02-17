@@ -1,0 +1,21 @@
+<h1>Your transactions (<%= @asset.name %>)</h1>
+
+<table class="table-bordered table-striped">
+  <tr>
+    <th>Amount</th>
+    <th>To</th>
+    <th>Note</th>
+  </tr>
+
+<% @transacts.each do |transact| %>
+  <tr>
+    <td><%= link_to transact.amount, transact_path(id: transact.id, asset: @asset.name) %></td>
+    <td><%= transact.to %></td>
+    <td><%= transact.note %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Transaction', new_transact_path(@asset.name) %>

@@ -5,7 +5,7 @@ class PersonSessionsController < ApplicationController
 
   def create
     @person_session = PersonSession.new(params[:person_session])
-    if @person_session.save!
+    if @person_session.save
       flash[:notice] = "Successfully logged in."
       redirect_back_or_default root_url
     else

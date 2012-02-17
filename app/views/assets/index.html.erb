@@ -7,7 +7,7 @@
 
 <% @assets.each do |asset| %>
   <tr>
-    <td><%= link_to asset.name, asset %></td>
+    <td><%= link_to asset.name, transacts_path(asset.name) %></td>
   </tr>
 <% end %>
 </table>

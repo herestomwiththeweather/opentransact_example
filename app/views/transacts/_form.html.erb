@@ -1,0 +1,20 @@
+<%= form_tag transacts_path(asset: params[:asset]) do %>
+  <%= render "shared/error_messages", target: @transact %>
+  <div class="field">
+    <label for="to">Payee email</label>
+    <%= text_field_tag(:to,params[:to],size:40) %>
+  </div>
+  <div class="field">
+    <label for="amount">Amount</label>
+    <%= text_field_tag(:amount,params[:amount],size:3) %>
+  </div>
+  <div class="field">
+    <label for="note">Note</label>
+    <%= text_field_tag(:note,params[:note],size:40) %>
+  </div>
+  <div class="actions">
+    <div class="form-actions">
+      <%= submit_tag "Pay now", class: "btn btn-primary" %>
+    </div>
+  </div>
+<% end %>

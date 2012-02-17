@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120216033750) do
+ActiveRecord::Schema.define(:version => 20120216051550) do
 
   create_table "assets", :force => true do |t|
     t.integer  "person_id"
@@ -35,6 +35,17 @@ ActiveRecord::Schema.define(:version => 20120216033750) do
     t.string   "last_login_ip"
     t.datetime "created_at",                        :null => false
     t.datetime "updated_at",                        :null => false
+  end
+
+  create_table "transacts", :force => true do |t|
+    t.integer  "asset_id"
+    t.integer  "payer_id"
+    t.integer  "payee_id"
+    t.string   "to"
+    t.decimal  "amount",     :precision => 8, :scale => 2, :default => 0.0
+    t.string   "note"
+    t.datetime "created_at",                                                :null => false
+    t.datetime "updated_at",                                                :null => false
   end
 
 end

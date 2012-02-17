@@ -13,6 +13,10 @@ class ApplicationController < ActionController::Base
     @current_person = current_person_session && current_person_session.record
   end
 
+  def current_user
+    current_person
+  end
+
   private
 
     def login_required
