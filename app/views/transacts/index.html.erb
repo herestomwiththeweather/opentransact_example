@@ -4,6 +4,7 @@
   <tr>
     <th>Amount</th>
     <th>To</th>
+    <th>From</th>
     <th>Note</th>
   </tr>
 
@@ -11,6 +12,7 @@
   <tr>
     <td><%= link_to transact.amount, transact_path(id: transact.id, asset: @asset.name) %></td>
     <td><%= transact.to %></td>
+    <td><%= transact.payer.email %></td>
     <td><%= transact.note %></td>
   </tr>
 <% end %>

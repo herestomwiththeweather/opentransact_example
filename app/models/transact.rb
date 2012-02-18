@@ -1,5 +1,5 @@
 class Transact < ActiveRecord::Base
-  attr_accessible :to, :amount, :note
+  attr_accessible :to, :amount, :note, :for, :redirect_uri
   belongs_to :asset
   belongs_to :payer, :class_name => "Person", :foreign_key => "payer_id"
   belongs_to :payee, :class_name => "Person", :foreign_key => "payee_id"
@@ -10,10 +10,21 @@ class Transact < ActiveRecord::Base
   validates_presence_of :payer, :amount, :asset
 
   def find_payee
-    Rails.logger.info "find_payee: #{self.to}"
     if nil == self.payee=Person.where(:email=>self.to).first
       errors.add :base, 'could not find payee'
     end
+  end
+
+  def redirect_uri_with_txn_url
+    unless redirect_uri.blank?
+      redirect_uri + (URI.parse(redirect_uri).query.nil? ? '?' : '&') + 'txn_url=' + CGI.escape(txn_url)
+    else
+      ""
+    end
+  end
+
+  def txn_url
+    "#{asset.url}/#{id}"
   end
 
   def results
@@ -27,9 +38,11 @@ class Transact < ActiveRecord::Base
       :to => payee.email,
       :from => payer.email,
       :amount => amount.to_s,
-      :txn_date => created_at.iso8601,
-      :memo => memo,
-      :txn_id => "http://" + "ubuntu.local" + "/transacts/#{asset.name}/#{id}",
+      :timestamp => created_at.iso8601,
+      :note => note,
+      :for => self.for, 
+      :txn_url => txn_url,
+      :asset_url => asset.url,
       :status => 'ok'
     }
     end

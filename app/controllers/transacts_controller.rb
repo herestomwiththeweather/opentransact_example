@@ -35,13 +35,23 @@ class TransactsController < ApplicationController
 
 
   def create
-    @transact = Transact.new(to: params[:to],note: params[:note],amount: params[:amount])
+    @transact = Transact.new(to: params[:to],
+                             note: params[:note],
+                             amount: params[:amount],
+                             for: params[:for],
+                             redirect_uri: params[:redirect_uri])
     @transact.asset = @asset
     @transact.payer = current_person
     
     respond_to do |format|
       if @transact.save
-        format.html { redirect_to transacts_path(asset: params[:asset]), notice: 'Transact was successfully created.' }
+        format.html do
+          unless @transact.redirect_uri.blank?
+            redirect_to @transact.redirect_uri_with_txn_url
+          else
+            redirect_to transacts_path(asset: params[:asset]), notice: 'Transact was successfully created.'
+          end
+        end
         format.json { render json: @transact.as_json, status: :created, location: @transact }
       else
         format.html { render action: "new" }
@@ -69,5 +79,6 @@ class TransactsController < ApplicationController
         format.json { head :no_content}
       end
     end
+    @asset.url = transacts_url(asset: @asset.name)
   end
 end

@@ -12,6 +12,8 @@
     <label for="note">Note</label>
     <%= text_field_tag(:note,params[:note],size:40) %>
   </div>
+  <%= hidden_field_tag(:redirect_uri,params[:redirect_uri]) %>
+  <%= hidden_field_tag(:for,params[:for]) %>
   <div class="actions">
     <div class="form-actions">
       <%= submit_tag "Pay now", class: "btn btn-primary" %>
