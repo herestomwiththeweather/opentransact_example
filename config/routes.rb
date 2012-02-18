@@ -1,4 +1,6 @@
 OpentransactExample::Application.routes.draw do
+  resources :clients
+
   resources :assets
 
   resources :person_sessions

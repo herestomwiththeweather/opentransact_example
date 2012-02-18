@@ -65,11 +65,9 @@
                 <h3>Session</h3>
                  <ul class="nav nav-list">
                      <li class="nav-header"><%= current_person.username %></li>
-                     <li>Your ip addr: <%= current_person.current_login_ip  %></li>
-                     <li>Login at: <%= current_person.current_login_at.strftime("%I:%M %p") %></li>
+                     <li><p>Login at: <%= current_person.current_login_at.strftime("%I:%M %p on %b %d") %> from <%= current_person.current_login_ip %></p></li>
                      <% unless current_person.last_login_at.nil? %>
-                       <li>Your last ip addr: <%= current_person.last_login_ip  %></li>
-                       <li>Last Login at: <%= current_person.last_login_at.strftime("%I:%M %p") %></li>
+                       <li><p>Prev Login at: <%= current_person.last_login_at.strftime("%I:%M %p on %b %d") %> from <%= current_person.last_login_ip %></p></li>
                      <% end %>
                 </ul>
               <% end %>

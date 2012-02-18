@@ -1,0 +1,14 @@
+<%= bootstrap_form_for(@client) do |f| %>
+  <div class="field">
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.text_field :website %>
+  </div>
+  <div class="field">
+    <%= f.text_field :redirect_uri %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

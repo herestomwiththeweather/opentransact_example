@@ -31,6 +31,7 @@ gem 'twitter-bootstrap-rails', :git => 'http://github.com/seyhunak/twitter-boots
 gem 'bootstrap_forms'
 gem 'authlogic'
 gem 'cancan'
+gem 'rack-oauth2'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
