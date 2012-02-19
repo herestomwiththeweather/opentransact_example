@@ -25,10 +25,6 @@ class AccessToken < ActiveRecord::Base
     mac_token
   end
 
-  def expires_in
-    (expires_at - Time.now.utc).to_i
-  end
-
   private
 
   def setup
