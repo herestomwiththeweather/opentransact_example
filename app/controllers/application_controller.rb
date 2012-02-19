@@ -19,13 +19,21 @@ class ApplicationController < ActionController::Base
 
   private
 
-    def login_required
-      unless current_person
-        store_location
-        redirect_to login_url, :notice => "You must be logged in to view the page"
-        return false
-      end
+  def require_oauth_user_token
+    raise Rack::OAuth2::Server::Resource::MAC::Unauthorized.new(:invalid_token,'User token is required')
+  end
+
+  def oauth?
+    true
+  end
+
+  def login_required
+    unless current_person
+      store_location
+      redirect_to login_url, :notice => "You must be logged in to view the page"
+      return false
     end
+  end
 
    def store_location
       session[:return_to] = request.fullpath

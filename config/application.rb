@@ -39,6 +39,10 @@ module OpentransactExample
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password]
 
+    require 'rack/oauth2'
+    config.middleware.use Rack::OAuth2::Server::Resource::MAC, 'Rack::OAuth2 OpenTransact Example (MAC)' do |req|
+    end
+
     # Use SQL instead of Active Record's schema dumper when creating the database.
     # This is necessary if your schema can't be completely dumped by the schema dumper,
     # like if you have constraints or database-specific column types
