@@ -1,17 +1,44 @@
 class AccessToken < ActiveRecord::Base
-  belongs_to :person
-  scope :valid, lambda { where('expires_at > ?', Time.now.utc) }
+  include Oauth2Token
+  self.default_lifetime=15.minutes
+  belongs_to :refresh_token
 
-  def to_mac_token
+  validates :secret, :presence => true
+  validates :algorithm, :presence => true, :inclusion => [
+    'hmac-sha-1',
+    'hmac-sha-256'
+  ]
+
+  def to_mac_token(with_refresh_token=false)
     mac_token = Rack::OAuth2::AccessToken::MAC.new(
       :access_token  => self.token,
       :mac_key       => self.secret,
       :mac_algorithm => self.algorithm,
       :expires_in    => self.expires_in
     )
+    if with_refresh_token
+      mac_token.refresh_token = self.create_refresh_token(
+        :person => self.person,
+        :client  => self.client
+      ).token
+    end
+    mac_token
   end
 
   def expires_in
     (expires_at - Time.now.utc).to_i
+  end
+
+  private
+
+  def setup
+    super
+    self.algorithm = 'hmac-sha-256'
+    self.secret = SecureToken.generate
+    if refresh_token
+      self.person = refresh_token.person
+      self.client = refresh_token.client
+      self.expires_at = [self.expires_at, refresh_token.expires_at].min
+    end
   end
 end

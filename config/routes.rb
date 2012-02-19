@@ -1,6 +1,10 @@
 OpentransactExample::Application.routes.draw do
   resources :clients
 
+  resources :authorizations, :only => :create
+  match 'oauth/authorize', :to => 'authorizations#new'
+  post 'oauth/token', :to => proc { |env| TokenEndpoint.new.call(env) }
+
   resources :assets
 
   resources :person_sessions
