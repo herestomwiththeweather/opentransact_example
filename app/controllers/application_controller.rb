@@ -19,12 +19,19 @@ class ApplicationController < ActionController::Base
 
   private
 
+  def require_oauth_token
+    @current_token = AccessToken.find_by_token request.env[Rack::OAuth2::Server::Resource::ACCESS_TOKEN]
+    raise Rack::OAuth2::Server::Resource::MAC::Unauthorized unless @current_token
+  end
+
   def require_oauth_user_token
-    raise Rack::OAuth2::Server::Resource::MAC::Unauthorized.new(:invalid_token,'User token is required')
+    require_oauth_token
+    raise Rack::OAuth2::Server::Resource::MAC::Unauthorized.new(:invalid_token,'User token is required') unless @current_token.person
+    @current_person = @current_token.person
   end
 
   def oauth?
-    true
+    !(request.env['rack.oauth2.access_token'].blank?)
   end
 
   def login_required

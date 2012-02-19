@@ -11,7 +11,19 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120218034919) do
+ActiveRecord::Schema.define(:version => 20120219050909) do
+
+  create_table "access_tokens", :force => true do |t|
+    t.integer  "person_id"
+    t.integer  "client_id"
+    t.integer  "refresh_token_id"
+    t.string   "token"
+    t.string   "secret"
+    t.string   "algorithm"
+    t.datetime "expires_at"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+  end
 
   create_table "assets", :force => true do |t|
     t.integer  "person_id"

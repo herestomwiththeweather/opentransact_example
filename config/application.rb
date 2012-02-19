@@ -41,6 +41,14 @@ module OpentransactExample
 
     require 'rack/oauth2'
     config.middleware.use Rack::OAuth2::Server::Resource::MAC, 'Rack::OAuth2 OpenTransact Example (MAC)' do |req|
+      valid_access_tokens=AccessToken.valid
+      access_token=valid_access_tokens.find_by_token(req.access_token) if valid_access_tokens
+      unless access_token
+        req.invalid_token!
+      else
+        access_token.to_mac_token.verify!(req)
+        access_token.token
+      end
     end
 
     # Use SQL instead of Active Record's schema dumper when creating the database.
