@@ -78,9 +78,10 @@ class TransactsController < ApplicationController
     if @asset.nil?
       respond_to do |format|
         format.html { redirect_to root_path, error: "Unknown asset class" }
-        format.json { head :no_content}
+        format.json { invalid_oauth_response(422, "Unknown asset class")}
       end
+    else
+      @asset.url = transacts_url(asset: @asset.name)
     end
-    @asset.url = transacts_url(asset: @asset.name)
   end
 end

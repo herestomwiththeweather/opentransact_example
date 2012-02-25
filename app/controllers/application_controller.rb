@@ -3,6 +3,10 @@ class ApplicationController < ActionController::Base
 
   helper_method :current_person
 
+  def invalid_oauth_response(code=401,message="Invalid OAuth Request")
+    render :text => {:error => message}.to_json, :status => code
+  end
+
   def current_person_session
     return @current_person_session if defined?(@current_person_session)
     @current_person_session = PersonSession.find
