@@ -9,7 +9,7 @@ Example OpenTransact provider using nov's rack-oauth2 gem.
 == Resources
 
 * Example OAuth 2 MAC token client code (https://gist.github.com/2024309)
-* Report Issues on GitHub (https://github.com/herestomwiththeweather/opentransact-example/issues)
+* Report Issues on GitHub (https://github.com/herestomwiththeweather/opentransact_example/issues)
 
 == Copyright
 
