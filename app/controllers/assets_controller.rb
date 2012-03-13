@@ -50,6 +50,7 @@ class AssetsController < ApplicationController
   # POST /assets.json
   def create
     @asset = current_person.assets.new(params[:asset])
+    @asset.url = transacts_url(asset: @asset.name)
 
     respond_to do |format|
       if @asset.save
