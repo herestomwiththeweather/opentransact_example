@@ -40,13 +40,12 @@ module OpentransactExample
     config.filter_parameters += [:password]
 
     require 'rack/oauth2'
-    config.middleware.use Rack::OAuth2::Server::Resource::MAC, 'Rack::OAuth2 OpenTransact Example (MAC)' do |req|
+    config.middleware.use Rack::OAuth2::Server::Resource::Bearer, 'Rack::OAuth2 OpenTransact Example (Bearer)' do |req|
       valid_access_tokens=AccessToken.valid
       access_token=valid_access_tokens.find_by_token(req.access_token) if valid_access_tokens
       unless access_token
         req.invalid_token!
       else
-        access_token.to_mac_token.verify!(req)
         access_token.token
       end
     end
