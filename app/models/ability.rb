@@ -9,6 +9,7 @@ class Ability
       person.id == t.payer_id || person.id == t.payee_id
     end
     can :create, Transact
+    can :wallet, Transact
     can :destroy, Transact, person_id: person.id
 
     #can [:read,:update,:destroy], Client, person_id: person.id
