@@ -9,7 +9,7 @@ class Client < ActiveRecord::Base
   validates :identifier, :presence => true, :uniqueness => true
 
   def as_json
-    {:client_id => identifier, :redirect_url => redirect_uri, :issued_at => created_at}.as_json
+    {:client_id => identifier, :client_secret => secret, :redirect_url => redirect_uri, :issued_at => created_at}.as_json
   end
 
   private
