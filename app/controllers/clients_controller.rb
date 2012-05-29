@@ -1,9 +1,14 @@
 class ClientsController < ApplicationController
-  before_filter :login_required
-  load_and_authorize_resource
+  before_filter :login_required, :except => [:create, :host_meta]
+  #load_and_authorize_resource
+  before_filter :get_client, :only => [:show,:edit,:update,:destroy]
 
   rescue_from CanCan::AccessDenied do |exception|
     redirect_to clients_path, :alert => exception.message
+  end
+
+  def host_meta
+    render 'host_meta.xml.erb'
   end
 
   def index
@@ -38,15 +43,38 @@ class ClientsController < ApplicationController
   end
 
   def create
-    @client = current_person.clients.new(params[:client])
-
     respond_to do |format|
-      if @client.save
-        format.html { redirect_to @client, notice: 'Client was successfully created.' }
-        format.json { render json: @client, status: :created, location: @client }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @client.errors, status: :unprocessable_entity }
+      format.html do
+        @client = current_person.clients.new(params[:client])
+        if @client.save
+          redirect_to @client, notice: 'Client was successfully created.'
+        else
+          render action: "new"
+        end
+      end
+      format.json do
+        response.headers["Cache-Control"] = "private, no-store, max-age=0, must-revalidate"
+        redirect_uri = ""
+        begin
+          raise "client_name" if params[:client_name].nil?
+          raise "client_url" if params[:client_url].nil?
+          raise "client_description" if params[:client_description].nil?
+          raise "type" if params[:type].nil?
+
+          if params[:application_type] && 'noredirect' == params[:application_type]
+            redirect_uri = request.protocol + request.host_with_port + "/transacts"
+          elsif params[:redirect_url]
+            redirect_uri = params[:redirect_url]
+          end
+          @client = Client.new(:name => params[:client_name],:description => params[:client_description],:website => params[:client_url], :redirect_uri => redirect_uri)
+          if @client.save
+            render :json => @client.as_json
+          else
+            render :json => {:error => "Bad Request"}.as_json, :status => 400
+          end
+        rescue => e
+          render :json => {:error => "Missing parameter: #{e}"}.as_json, :status => 400
+        end
       end
     end
   end
@@ -72,6 +100,14 @@ class ClientsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to clients_url }
       format.json { head :no_content }
+    end
+  end
+
+  private
+  def get_client
+    unless @client = current_person.clients.find(params[:id])
+      flash[:notice] = "Wrong application id"
+      raise ActiveRecord::RecordNotFound
     end
   end
 end

@@ -22,8 +22,10 @@ end
 
 group :development, :test do
   gem 'rspec-rails'
+  gem 'database_cleaner'
   gem 'cucumber-rails'
   gem 'awesome_print'
+  gem 'artifice'
 end
 
 gem 'jquery-rails'

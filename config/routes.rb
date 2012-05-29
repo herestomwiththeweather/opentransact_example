@@ -1,5 +1,6 @@
 OpentransactExample::Application.routes.draw do
   resources :clients
+  match '/.well-known/host-meta' => 'clients#host_meta', :as => :host_meta
 
   resources :authorizations, :only => :create
   match 'oauth/authorize', :to => 'authorizations#new'

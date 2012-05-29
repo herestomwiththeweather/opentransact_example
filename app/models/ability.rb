@@ -11,7 +11,7 @@ class Ability
     can :create, Transact
     can :destroy, Transact, person_id: person.id
 
-    can [:read,:update,:destroy], Client, person_id: person.id
-    can :create, Client
+    #can [:read,:update,:destroy], Client, person_id: person.id
+    #can :create, Client
   end
 end
