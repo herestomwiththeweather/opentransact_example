@@ -2,7 +2,7 @@ class TransactsController < ApplicationController
   before_filter :login_required, :unless => :oauth?
   before_filter :require_oauth_user_token, :if => :oauth?
   skip_before_filter :verify_authenticity_token, :if => :oauth?
-  before_filter :find_by_asset
+  before_filter :find_by_asset, :except => [:wallet]
   load_and_authorize_resource
 
   rescue_from CanCan::AccessDenied do |exception|
