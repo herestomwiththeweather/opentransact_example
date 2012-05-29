@@ -9,6 +9,17 @@ class TransactsController < ApplicationController
     redirect_to transacts_path(asset: @asset.name), :alert => exception.message
   end
 
+  def wallet
+    @assets = Asset.all.map {|a| {:name => a.name, :url => a.url}}
+    @wallet = {'version' => '1.0',
+               'encoding' => 'UTF8',
+               'total' => @assets.length,
+               'assets' => @assets}
+    respond_to do |format|
+      format.json { render :json => @wallet.as_json }
+    end
+  end
+
   def index
     @transacts = current_person.transactions.by_asset(@asset)
 

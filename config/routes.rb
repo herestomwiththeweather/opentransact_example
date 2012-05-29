@@ -20,7 +20,9 @@ OpentransactExample::Application.routes.draw do
   delete "transacts(/:asset)/:id(.:format)"      => "transacts#destroy", :as => 'transact'
   #get    "transacts/[:asset]/:id/edit" => "transacts#edit",    :as => 'edit_transact'
   #put    "transacts/[:asset]/:id"      => "transacts#update",  :as => 'transact'
-  
+
+  match '/wallet' => 'transacts#wallet', :as => :wallet
+
   match 'signup' => 'people#new', :as => :signup
   match 'login' => 'person_sessions#new', :as => :login
   match 'logout' => 'person_sessions#destroy', :as => :logout
