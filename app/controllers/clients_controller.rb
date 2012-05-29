@@ -62,7 +62,7 @@ class ClientsController < ApplicationController
           raise "type" if params[:type].nil?
 
           if params[:application_type] && 'noredirect' == params[:application_type]
-            redirect_uri = request.protocol + request.host_with_port + "/transacts"
+            redirect_uri = request.protocol + request.host_with_port + "/people"
           elsif params[:redirect_url]
             redirect_uri = params[:redirect_url]
           end
