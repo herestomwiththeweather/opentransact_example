@@ -10,6 +10,7 @@ class Ability
     end
     can :create, Transact
     can :wallet, Transact
+    can :user_info, Transact
     can :destroy, Transact, person_id: person.id
 
     #can [:read,:update,:destroy], Client, person_id: person.id

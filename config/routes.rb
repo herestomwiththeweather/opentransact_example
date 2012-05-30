@@ -22,6 +22,7 @@ OpentransactExample::Application.routes.draw do
   #put    "transacts/[:asset]/:id"      => "transacts#update",  :as => 'transact'
 
   match '/wallet' => 'transacts#wallet', :as => :wallet
+  match '/user_info' => 'transacts#user_info', :as => :user_info
 
   match 'signup' => 'people#new', :as => :signup
   match 'login' => 'person_sessions#new', :as => :login

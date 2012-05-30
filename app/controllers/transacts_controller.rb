@@ -2,11 +2,23 @@ class TransactsController < ApplicationController
   before_filter :login_required, :unless => :oauth?
   before_filter :require_oauth_user_token, :if => :oauth?
   skip_before_filter :verify_authenticity_token, :if => :oauth?
-  before_filter :find_by_asset, :except => [:wallet]
+  before_filter :find_by_asset, :except => [:wallet,:user_info]
   load_and_authorize_resource
 
   rescue_from CanCan::AccessDenied do |exception|
     redirect_to transacts_path(asset: @asset.name), :alert => exception.message
+  end
+
+  def user_info
+    @user_info = {'name' => current_person.username,
+                  'profile' => person_url(current_person),
+                  'picture' => '',
+                  'website' => '',
+                  'email' => current_person.email,
+                  'user_id' => current_person.id}
+    respond_to do |format|
+      format.json { render :json => @user_info.as_json }
+    end
   end
 
   def wallet
