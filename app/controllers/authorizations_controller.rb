@@ -32,10 +32,10 @@ class AuthorizationsController < ApplicationController
         if params[:approve]
           case req.response_type
           when :code
-            authorization_code = current_person.authorization_codes.create(:client_id=>@client,:redirect_uri=>res.redirect_uri)
+            authorization_code = current_person.authorization_codes.create(:client_id=>@client.id,:redirect_uri=>res.redirect_uri)
             res.code=authorization_code.token
           when :token
-            res.access_token = current_person.access_tokens.create(:client_id=>@client).to_bearer_token
+            res.access_token = current_person.access_tokens.create(:client_id=>@client.id).to_bearer_token
           end
           res.approve!
         else

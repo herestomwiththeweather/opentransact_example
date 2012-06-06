@@ -9,4 +9,10 @@ class Person < ActiveRecord::Base
   def transactions
     Transact.by_person(self)
   end
+
+  def balance(asset)
+    credits = Transact.by_asset(asset).sum(:amount,:conditions => ['payee_id=?',self.id])
+    debits = Transact.by_asset(asset).sum(:amount,:conditions => ['payer_id=?',self.id])
+    credits-debits
+  end
 end

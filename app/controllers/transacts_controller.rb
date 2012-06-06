@@ -22,7 +22,7 @@ class TransactsController < ApplicationController
   end
 
   def wallet
-    @assets = Asset.all.map {|a| {:name => a.name, :url => a.url}}
+    @assets = Asset.all.map {|a| {:name => a.name, :url => a.url, :balance => current_person.balance(a)}}
     @wallet = {'version' => '1.0',
                'encoding' => 'UTF8',
                'total' => @assets.length,
